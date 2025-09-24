@@ -154,4 +154,10 @@ const theme = createTheme({
             secondary: '#F9DFBC',
         },
     },
+    typography: {
+        fontFamily: [
+            'Roboto',
+            'sans-serif'
+        ].join(','),
+    }
 });
