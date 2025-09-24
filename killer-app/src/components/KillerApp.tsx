@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { Typography, IconButton, Container, Box, Button, useMediaQuery, ThemeProvider, createTheme, Fab } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+import { CssVarsProvider, Box, Typography, Button, IconButton } from '@mui/joy';
 import MenuIcon from '@mui/icons-material/Menu';
 import PlayerList, { Player } from "./PlayerList";
 import SettingsDrawer from "./SettingsDrawer";
@@ -91,31 +92,31 @@ export default function KillerApp() {
     }
 
     return (
-        <ThemeProvider theme={theme}>
-            <Box sx={{ bgcolor: theme.palette.background.default, minHeight: '100vh' }}>
+        <CssVarsProvider>
+            <Box sx={{ bgcolor: '#000', minHeight: '100vh' }}>
                 {/* Header */}
                 <Box sx={{ position: 'relative', pt: 4, pb: 2 }}>
-                    <Typography variant="h3" align="center" sx={{ color: theme.palette.primary.main, fontWeight: 'bold', letterSpacing: 2 }}>
+                    <Typography level="h1" sx={{ color: '#E3292E', fontWeight: 'bold', letterSpacing: 2, fontFamily: 'Montserrat, Quicksand, Poppins, sans-serif', textAlign: 'center' }}>
                         Killer
                     </Typography>
-                    <Fab
+                    <IconButton
                         color="primary"
-                        size="medium"
+                        size="md"
                         sx={{ position: 'absolute', top: 0, right: 0, m: 2, zIndex: 10 }}
                         onClick={() => setDrawerOpen(true)}
                     >
                         <MenuIcon />
-                    </Fab>
+                    </IconButton>
                 </Box>
-                <Container maxWidth="sm" sx={{ pt: isMobile ? 2 : 4, pb: 4 }}>
+                <Box sx={{ maxWidth: 600, mx: 'auto', pt: isMobile ? 2 : 4, pb: 4 }}>
                     {winner ? (
-                        <Box sx={{ bgcolor: theme.palette.success.light, p: 2, borderRadius: 2, mb: 2, textAlign: 'center' }}>
-                            <Typography variant="h5" sx={{ color: theme.palette.success.contrastText }}>Winner: {winner} 🎉</Typography>
-                            <Button variant="contained" onClick={newGame} sx={{ mt: 2, bgcolor: theme.palette.primary.main, color: theme.palette.primary.contrastText }}>Start New Game</Button>
+                        <Box sx={{ bgcolor: '#F9DFBC', p: 2, borderRadius: 2, mb: 2, textAlign: 'center' }}>
+                            <Typography level="h3" sx={{ color: '#309F6A' }}>Winner: {winner} 🎉</Typography>
+                            <Button color="primary" variant="solid" onClick={newGame} sx={{ mt: 2 }}>Start New Game</Button>
                         </Box>
                     ) : null}
                     <PlayerList players={players} onAdd={addScore} onSubtract={subtractScore} />
-                </Container>
+                </Box>
                 <SettingsDrawer
                     open={drawerOpen}
                     onClose={() => setDrawerOpen(false)}
@@ -125,43 +126,8 @@ export default function KillerApp() {
                     onResetPlayers={resetPlayers}
                 />
             </Box>
-        </ThemeProvider>
+        </CssVarsProvider>
     );
 }
 
-const theme = createTheme({
-    palette: {
-        mode: 'light',
-        primary: {
-            main: '#E3292E', // Red
-            contrastText: '#FFFFFF',
-        },
-        secondary: {
-            main: '#309F6A', // Green
-            contrastText: '#FFFFFF',
-        },
-        background: {
-            default: '#000000', // Black
-            paper: '#F9DFBC', // Cream
-        },
-        success: {
-            main: '#309F6A', // Green
-            contrastText: '#FFFFFF',
-            light: '#F9DFBC', // Cream for winner
-        },
-        error: {
-            main: '#E3292E', // Red
-            contrastText: '#FFFFFF',
-        },
-        text: {
-            primary: '#FFFFFF',
-            secondary: '#F9DFBC',
-        },
-    },
-    typography: {
-        fontFamily: [
-            'Roboto',
-            'sans-serif'
-        ].join(','),
-    }
-});
+
