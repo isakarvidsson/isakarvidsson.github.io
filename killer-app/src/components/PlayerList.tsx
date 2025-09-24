@@ -10,22 +10,21 @@ export type Player = {
     eliminated: boolean;
 };
 
-const dartColors = [
-    '#008000', // green
-    '#fff',    // white
-    '#d32f2f', // red
-    '#000',    // black
-];
+
+const cream = '#F9DFBC';
+const gray = '#B0B0B0';
+const green = '#309F6A';
+const dead = '#757575';
 
 function getPlayerBg(player: Player, idx: number) {
-    if (player.isKiller) return '#d32f2f'; // red for killer
-    if (player.eliminated) return '#757575'; // gray for dead
-    return dartColors[idx % dartColors.length];
+    if (player.isKiller) return green;
+    if (player.eliminated) return dead;
+    return idx % 2 === 0 ? cream : gray;
 }
 
-function getPlayerTextColor(player: Player, idx: number) {
+function getPlayerTextColor(player: Player) {
     if (player.isKiller || player.eliminated) return '#fff';
-    return idx % 2 === 0 ? '#000' : '#d32f2f';
+    return '#000';
 }
 
 type Props = {
@@ -48,7 +47,7 @@ export default function PlayerList({ players, onAdd, onSubtract }: Props) {
                         maxWidth: 400,
                         borderRadius: 2,
                         bgcolor: getPlayerBg(p, idx),
-                        color: getPlayerTextColor(p, idx),
+                        color: getPlayerTextColor(p),
                         py: 2,
                         px: 1,
                         boxShadow: 2,
@@ -57,7 +56,7 @@ export default function PlayerList({ players, onAdd, onSubtract }: Props) {
                     <IconButton
                         onClick={() => onSubtract(idx)}
                         disabled={p.eliminated || p.score <= 0}
-                        sx={{ color: getPlayerTextColor(p, idx) }}
+                        sx={{ color: getPlayerTextColor(p) }}
                     >
                         <RemoveIcon />
                     </IconButton>
@@ -68,7 +67,7 @@ export default function PlayerList({ players, onAdd, onSubtract }: Props) {
                     <IconButton
                         onClick={() => onAdd(idx)}
                         disabled={p.eliminated || p.score >= 5}
-                        sx={{ color: getPlayerTextColor(p, idx) }}
+                        sx={{ color: getPlayerTextColor(p) }}
                     >
                         <AddIcon />
                     </IconButton>

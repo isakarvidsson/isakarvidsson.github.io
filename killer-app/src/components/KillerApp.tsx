@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { AppBar, Toolbar, Typography, IconButton, Container, Box, Button, useMediaQuery, ThemeProvider, createTheme } from "@mui/material";
+import { Typography, IconButton, Container, Box, Button, useMediaQuery, ThemeProvider, createTheme, Fab } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import PlayerList, { Player } from "./PlayerList";
 import SettingsDrawer from "./SettingsDrawer";
@@ -93,16 +93,20 @@ export default function KillerApp() {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ bgcolor: theme.palette.background.default, minHeight: '100vh' }}>
-                <AppBar position="static" sx={{ bgcolor: theme.palette.primary.main }}>
-                    <Toolbar>
-                        <Typography variant="h6" sx={{ flexGrow: 1, color: theme.palette.primary.contrastText }}>
-                            Killer Dart Game
-                        </Typography>
-                        <IconButton color="inherit" edge="end" onClick={() => setDrawerOpen(true)}>
-                            <MenuIcon />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
+                {/* Header */}
+                <Box sx={{ position: 'relative', pt: 4, pb: 2 }}>
+                    <Typography variant="h3" align="center" sx={{ color: theme.palette.primary.main, fontWeight: 'bold', letterSpacing: 2 }}>
+                        Killer
+                    </Typography>
+                    <Fab
+                        color="primary"
+                        size="medium"
+                        sx={{ position: 'absolute', top: 0, right: 0, m: 2, zIndex: 10 }}
+                        onClick={() => setDrawerOpen(true)}
+                    >
+                        <MenuIcon />
+                    </Fab>
+                </Box>
                 <Container maxWidth="sm" sx={{ pt: isMobile ? 2 : 4, pb: 4 }}>
                     {winner ? (
                         <Box sx={{ bgcolor: theme.palette.success.light, p: 2, borderRadius: 2, mb: 2, textAlign: 'center' }}>
